@@ -3,17 +3,12 @@ import pandas as pd
 import re
 from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.feature_extraction.text import CountVectorizer
-import os
+import json
+import sys
 
 stop_words = ['a', 'do', 'e', 'de', 'em', 'que', 'um', 'para', 'na', 'no', "mais", "menos", "da", "como", "uma", "por", "se", "ou"]
-youtubeApiKey = os.getenv("YOUTUBE_API_KEY")
-
+youtubeApiKey = "AIzaSyCLu_E5O0M3FZPvyHDgnJAYQR8FZro-I_M"
 youtube = build('youtube','v3', developerKey=youtubeApiKey)
-
-playlistId = 'PLVUwsDGrEYrkytSIuQBvCi7Y-sl0O_N-U&pp' 
-playlistName = 'Paradoxos & Sutilezas'
-nextPage_token = None
-
 
 #limpeza da descrição
 def limpar_texto(texto):
@@ -31,20 +26,21 @@ def gerar_topicos(texto):
 
   for i, topic in enumerate(lda.components_):
     top_palavras = [vectorizer.get_feature_names_out()[index] for index in topic.argsort()[-10:]]
-    print(f"Tópico {i+1}: {top_palavras}")
   return top_palavras
 
 def getPlaylistId(url):
   inicio = url.find("list=")
   inicio +=5
-  urlId = url[inicio:inicio + 37]
+  urlId = url[inicio:inicio + 34]
   return urlId
 
-def obter_playlist_dataFrame():
+def obter_playlist_dataFrame(complet_url):
   playlist_videos = []
+  nextPage_token = None
+  playlistId = getPlaylistId(complet_url) 
 
   while True:
-    res = youtube.playlistItems().list(part='snippet', playlistId = playlistId, maxResults=50, pageToken=nextPage_token).execute()
+    res = youtube.playlistItems().list(part='snippet', playlistId=playlistId, maxResults=50, pageToken=nextPage_token).execute()
     playlist_videos += res['items']
     
     nextPage_token = res.get('nestPageToken')
@@ -74,19 +70,20 @@ def obter_playlist_dataFrame():
     'views': videos_viewCount,
     'likes': videos_likeCount,
     'comments': videos_commentCount,
-    'publishe at': videosDatepublished,
+    'published at': videosDatepublished,
     'id': videosIDs
   }
 
   df = pd.DataFrame(data)
   topicos = gerar_topicos(videosDescription_clean)
-  return df.to_json(orient='records'), topicos
 
+  df_json = df.to_json(orient="records")
+  topicos_json = json.dumps(topicos)
+  print(json.dumps({"data":df_json, "topicos": topicos_json}))
+  return df, topicos
 
-
-
-
-
+obter_playlist_dataFrame(sys.argv[1])
+#obter_playlist_dataFrame("https://www.youtube.com/watch?v=fq4-UXcVh5E&list=PLLksQWY1ipSiJlmy0WvM0x5i1O74ctwaY&pp=iAQB")
 
 
 
