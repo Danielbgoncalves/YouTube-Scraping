@@ -9,6 +9,7 @@ import os
 
 stop_words = ['a', 'do', 'e', 'de', 'em', 'que', 'um', 'para', 'na', 'no', "mais", "menos", "da", "como", "uma", "por", "se", "ou"]
 api_key = os.getenv('API_KEY')
+youtubeApiKey = api_key
 youtube = build('youtube','v3', developerKey=youtubeApiKey)
 
 #limpeza da descrição
