@@ -5,9 +5,10 @@ from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.feature_extraction.text import CountVectorizer
 import json
 import sys
+import os
 
 stop_words = ['a', 'do', 'e', 'de', 'em', 'que', 'um', 'para', 'na', 'no', "mais", "menos", "da", "como", "uma", "por", "se", "ou"]
-youtubeApiKey = "AIzaSyCLu_E5O0M3FZPvyHDgnJAYQR8FZro-I_M"
+api_key = os.getenv('API_KEY')
 youtube = build('youtube','v3', developerKey=youtubeApiKey)
 
 #limpeza da descrição
