@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>YouTube Scraping</title>
+</head>
+<body>
+    <div class="container">
+        <h1>YouTube Scraping</h1>
+        <input type="text" id="playlist-url" placeholder="Cole a URL da playlist do YouTube aqui">
+        <button id="submit-btn">Enviar</button>
+
+        <h2>Tópicos Mais Frequentes:</h2>
+        <div id="topics-output">
+            <!-- Os tópicos serão preenchidos aqui dinamicamente -->
+        </div>
+        
+        <table id="playlist-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Views</th>
+                    <th>Likes</th>
+                    <th>Comentários</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Os dados da tabela serão preenchidos dinamicamente -->
+            </tbody>
+
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
