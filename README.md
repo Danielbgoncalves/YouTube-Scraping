@@ -22,13 +22,10 @@ def gerar_topicos(texto):
 
 ## 🚀 Sobre mim
 
-Estudante de Ciência da Computação em Uberlândia, me contrata cara
-
+Estudante de Ciência da Computação em Uberlândia, me contrata.
 
 ## Usado por
 
 Esse projeto é usado pelas seguintes empresas:
 - Eu
 - Eu mesmo# YouTube-Scraping
-# YouTube-Scraping
-# YouTube-Scraping
